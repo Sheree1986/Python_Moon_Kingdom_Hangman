@@ -1,12 +1,19 @@
 import pygame
 import math
 import random
+from pygame import mixer
 
 
 pygame.init()
-# What display when games runs
+
+# Create screen - this is what display when games runs
 WIDTH, HEIGHT = 800, 500 
 win = pygame.display.set_mode((WIDTH, HEIGHT))
+
+
+# Background music
+mixer.music.load("smtheme.ogg")
+mixer.music.play(-1)
 pygame.display.set_caption("Moon Kingdom Transformation (Hangman!)")
 
 # load images
@@ -33,8 +40,8 @@ for i in range(26):
     letters.append([x, y, chr(A + i), True])
 
 # Letters front 
-font = pygame.font.SysFont('comicsans', 30)
-TITLE = pygame.font.SysFont('comicsans', 40)
+font = pygame.font.SysFont('comicsans', 20)
+TITLE = pygame.font.SysFont('comicsans', 30)
 
 # variables for game
 game_status = 0
@@ -46,7 +53,7 @@ guesses = [" "]
 WHITE = (255, 255, 255)
 PINK = (134, 46, 156)
 
-#GIF = pygame.image.load("hangmantransformation.gif")
+
 
 # frames per second
 FPS = 60
@@ -67,8 +74,9 @@ def draw():
             display_guesses += letter + " "
         else:
             display_guesses += "_ "
-    text = font.render(display_guesses, 1, PINK)
-    win.blit(text, (400, 200))
+    text = TITLE.render(display_guesses, 1, PINK)
+    win.blit(text, (200, 300))
+
 
 
 
@@ -79,9 +87,11 @@ def draw():
             pygame.draw.circle(win, PINK, (x, y), RADIUS, 3)
             text = font.render(ltr, 1, PINK)
             win.blit(text, (x - text.get_width()/2, y - text.get_height()/2))
+            #letter_Sound = mixer.Sound("Sailor-Moon-Jingle.ogg")
+            #letter_Sound.play()
 
 # draw image with x and y position we want images display
-    win.blit(images[game_status], (30, 100))
+    win.blit(images[game_status], (270, 80))
     pygame.display.update()
 
 
@@ -130,6 +140,9 @@ while run:
             break
 
     if won:
+        GIF = pygame.image.load("hangmantransformation.gif")
+        win.blit(GIF, (30, 100))
+        pygame.display.update()
         won_lost_message("Moon Prism Power Make UP!")
 
         break
