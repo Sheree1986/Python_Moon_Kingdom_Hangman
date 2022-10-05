@@ -2,6 +2,7 @@ import pygame
 import math
 import random
 from pygame import mixer
+import button
 
 
 pygame.init()
@@ -12,14 +13,15 @@ win = pygame.display.set_mode((WIDTH, HEIGHT))
 
 
 # Background music
-mixer.music.load("smtheme.ogg")
+mixer.music.load("assets/smtheme.ogg")
 mixer.music.play(-1)
 pygame.display.set_caption("Moon Kingdom Transformation (Hangman!)")
+
 
 # load images
 images = []
 for i in range(13):
-    image = pygame.image.load("hangman" + str(i) + ".png")
+    image = pygame.image.load("assets/hangman" + str(i) + ".png")
     images.append(image)
 
 
@@ -44,6 +46,8 @@ font = pygame.font.SysFont('comicsans', 20)
 TITLE = pygame.font.SysFont('comicsans', 30)
 
 # variables for game
+game_paused = False
+menu_state = "main"
 game_status = 0
 words = ["USAGI", "SAILOR MOON", "SAILOR MARS", "SAILOR MINI MOON", "SAILOR JUPITER", "SAILOR VENUS", "SAILOR SATURN", "MOON TIARA MAGIC", "SPACE SWORD BLASTER", "CRESCENT BEAM", "MERCURY AQUA RHAPSODY", "WORLD SHAKING", "FIRE SOUL", "SUPREME THUNDER" ]
 word = random.choice(words)
@@ -53,15 +57,46 @@ guesses = [" "]
 WHITE = (255, 255, 255)
 PINK = (134, 46, 156)
 
+# load buttons start/quit image
+
+#start_img = pygame.image.load("assets/start.png").convert_alpha()
+#quit_img = pygame.image.load("assets/quit.png").convert_alpha()
+
+# create button instances
+##quit_button = button.Button(450, 200, quit_img, 1)
+
+
+
+
+
 
 
 # frames per second
 FPS = 60
 clock = pygame.time.Clock()
 run = True
+# main menu loop
+#def menu():
+
+  #  while run:
+        #win.fill(WHITE)
+
+        #if start_button.draw(win):
+           # print("START")
+       # if quit_button.draw(win):
+               # print("QUIT")
+
+#menu()
+  
+
+
+
+
 
 def draw():
     win.fill(WHITE)
+
+
 
 # Title 
     text = TITLE.render("Moon Kingdom Transformation Hangman", 1, PINK)
@@ -152,7 +187,7 @@ while run:
     if game_status == 12:
         won_lost_message("Usagi is a crybaby")
         break
-                       #testing push to main 
+                       
 
 pygame.quit()
 

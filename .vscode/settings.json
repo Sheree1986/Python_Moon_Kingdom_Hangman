@@ -1,9 +1,11 @@
 {
     "cSpell.words": [
         "blit",
+        "collidepoint",
         "comicsans",
         "MOUSEBUTTONDOWN",
         "smtheme",
-        "startx"
+        "startx",
+        "topleft"
     ]
 }
