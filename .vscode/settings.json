@@ -6,6 +6,7 @@
         "MOUSEBUTTONDOWN",
         "smtheme",
         "startx",
-        "topleft"
+        "topleft",
+        "wordbuttons"
     ]
 }

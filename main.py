@@ -2,45 +2,25 @@ import pygame
 import math
 import random
 from pygame import mixer
-import button
 
-
+# initializes pygame
 pygame.init()
 
 # Create screen - this is what display when games runs
 WIDTH, HEIGHT = 800, 500 
 win = pygame.display.set_mode((WIDTH, HEIGHT))
 
-
-# Background music
-mixer.music.load("assets/smtheme.ogg")
-mixer.music.play(-1)
-pygame.display.set_caption("Moon Kingdom Transformation (Hangman!)")
-
-
-# load images
-images = []
-for i in range(13):
-    image = pygame.image.load("assets/hangman" + str(i) + ".png")
-    images.append(image)
-
+#--------
+# CONSTANTS
+#--------
 
 # variables for letter button
-
-
 RADIUS = 20
 GAP = 15
 letters = [] 
 startx = round((WIDTH - (RADIUS * 2 + GAP) * 13) / 2)
 starty = 400
 A = 65
-
-# to achieve two rows by using i % 13. i // 13 allows for whole numbers division with no remainders
-for i in range(26):
-    x = startx +  GAP * 2 + ((RADIUS * 2 + GAP) * (i % 13))
-    y = starty + ((i // 13) * (GAP + RADIUS * 2))
-    letters.append([x, y, chr(A + i), True])
-
 # Letters front 
 font = pygame.font.SysFont('comicsans', 20)
 TITLE = pygame.font.SysFont('comicsans', 30)
@@ -57,17 +37,37 @@ guesses = [" "]
 WHITE = (255, 255, 255)
 PINK = (134, 46, 156)
 
+#--------
+# CONSTANTS
+#--------
+
+
+
+
+# Background music
+mixer.music.load("assets/smtheme.ogg")
+mixer.music.play(-1)
+pygame.display.set_caption("Moon Kingdom Transformation (Hangman!)")
+
+
+# load images
+images = []
+for i in range(13):
+    image = pygame.image.load("assets/hangman" + str(i) + ".png")
+    images.append(image)
+
+
+
+
+
+# to achieve two rows by using i % 13. i // 13 allows for whole numbers division with no remainders
+for i in range(26):
+    x = startx +  GAP * 2 + ((RADIUS * 2 + GAP) * (i % 13))
+    y = starty + ((i // 13) * (GAP + RADIUS * 2))
+    letters.append([x, y, chr(A + i), True])
+
+
 # load buttons start/quit image
-
-#start_img = pygame.image.load("assets/start.png").convert_alpha()
-#quit_img = pygame.image.load("assets/quit.png").convert_alpha()
-
-# create button instances
-##quit_button = button.Button(450, 200, quit_img, 1)
-
-
-
-
 
 
 
@@ -75,19 +75,6 @@ PINK = (134, 46, 156)
 FPS = 60
 clock = pygame.time.Clock()
 run = True
-# main menu loop
-#def menu():
-
-  #  while run:
-        #win.fill(WHITE)
-
-        #if start_button.draw(win):
-           # print("START")
-       # if quit_button.draw(win):
-               # print("QUIT")
-
-#menu()
-  
 
 
 
@@ -139,10 +126,17 @@ def won_lost_message(message):
     pygame.time.delay(3000)
         
 
+def restart():
+    win.fill(WHITE)
+    draw()
+    game_status = 0
+    for i in range(26):
+        x = startx +  GAP * 2 + ((RADIUS * 2 + GAP) * (i % 13))
+        y = starty + ((i // 13) * (GAP + RADIUS * 2))
+        letters.append([x, y, chr(A + i), True])
 
-
-# while loop run is equal to true keep running this
-# loop if game is lost the loop exits
+# Main Loop while loop run is equal to true keep running this
+# loop if game is lost the loop exits 
 while run:
 
 # Clock object to ensure game keep track of time
@@ -167,6 +161,10 @@ while run:
                         if ltr not in word:
                             game_status += 1
     draw()
+
+    if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_r:
+                restart(r)
 # for loop to see if game is won
     won = True
     for letter in word:
@@ -175,20 +173,18 @@ while run:
             break
 
     if won:
-        GIF = pygame.image.load("hangmantransformation.gif")
-        win.blit(GIF, (30, 100))
-        pygame.display.update()
-        won_lost_message("Moon Prism Power Make UP!")
+      
+        won_lost_message("You Won: Moon Prism Power Make UP!")
 
         break
 
 # to see if game is loss
 
     if game_status == 12:
-        won_lost_message("Usagi is a crybaby")
+        won_lost_message("Game Over: Usagi is a crybaby")
         break
                        
-
+   
 pygame.quit()
 
 
