@@ -2,6 +2,7 @@ import pygame
 import math
 import random
 from pygame import mixer
+import button
 
 # initializes pygame
 mixer.init()
@@ -57,8 +58,10 @@ mixer.music.play(-1)
 # load images
 # button imgs
 start_img = pygame.image.load("assets/start.png")
-quit_img = pygame.image.load("assets/quit.png")
+exit_img = pygame.image.load("assets/exit.png")
 restart_img = pygame.image.load("assets/restart.png")
+start_screen = pygame.image.load("assets/smb.png")
+start_screen = pygame.transform.scale(start_screen, (WIDTH, HEIGHT))
 
 #store transformation images in a list
 images = []
@@ -77,8 +80,6 @@ font = pygame.font.SysFont('comicsans', 20)
 TITLE = pygame.font.SysFont('comicsans', 30)
 
 
-
-
 # to achieve two rows by using i % 13. i // 13 allows for whole numbers division with no remainders
 for i in range(26):
     x = startx +  GAP * 2 + ((RADIUS * 2 + GAP) * (i % 13))
@@ -86,20 +87,8 @@ for i in range(26):
     letters.append([x, y, chr(A + i), True])
 
 
-# load buttons start/quit image
-
-
-
-
-
-
-
-
-
 def draw():
     win.fill(WHITE)
-
-
 
 # Title 
     text = TITLE.render("Moon Kingdom Transformation Hangman", 1, PINK)
@@ -116,8 +105,6 @@ def draw():
     win.blit(text, (200, 300))
 
 
-
-
 # draw buttons with letters A-Z
     for letter in letters:
         x, y, ltr, visible = letter
@@ -130,7 +117,7 @@ def draw():
 
 # draw image with x and y position we want images display
     win.blit(images[game_status], (270, 80))
-    pygame.display.update()
+
 
 
 def won_lost_message(message):
@@ -141,13 +128,35 @@ def won_lost_message(message):
     pygame.display.update()
     pygame.time.delay(3000)
         
-
- 
-    game_status = 0
+    
     for i in range(26):
         x = startx +  GAP * 2 + ((RADIUS * 2 + GAP) * (i % 13))
         y = starty + ((i // 13) * (GAP + RADIUS * 2))
         letters.append([x, y, chr(A + i), True])
+
+# for loop to see if game is won
+won = True
+for letter in word:
+    if letter not in guesses:
+        won = False
+        break
+
+    if won:
+      
+        won_lost_message("You Won: Moon Prism Power Make UP!")
+
+        break
+
+# to see if game is loss
+
+    if game_status == 12:
+        won_lost_message("Game Over: Usagi is a crybaby")
+        break
+
+start_button = button.Button(WIDTH // 2 - 400, HEIGHT // 2 - 80, start_img, 1)
+exit_button = button.Button(WIDTH // 2 - -180, HEIGHT // 2 + -80, exit_img, 1)
+restart_button = button.Button(WIDTH // 2 - 100, HEIGHT // 2 - 50, restart_img, 2)
+
 
 # Main Loop while loop run is equal to true keep running this
 # loop if game is lost the loop exits 
@@ -156,12 +165,22 @@ while run:
 
 # Clock object to ensure game keep track of time
     clock.tick(FPS)
+
     if start_game == False:
         #main menu
-        pass
+        win.blit(start_screen,(0,0))
+
+        if start_button.draw(win):
+                start_game = True
+        if exit_button.draw(win):
+                run = False
+        
     else:
 
-     draw()
+        draw()
+
+
+
 
 # event triggers stored in the for loop
     for event in pygame.event.get():
@@ -181,29 +200,12 @@ while run:
                         guesses.append(ltr)
                         if ltr not in word:
                             game_status += 1
-    draw()
+    #draw()
 
    
-# for loop to see if game is won
-    won = True
-    for letter in word:
-        if letter not in guesses:
-            won = False
-            break
 
-    if won:
-      
-        won_lost_message("You Won: Moon Prism Power Make UP!")
-
-        break
-
-# to see if game is loss
-
-    if game_status == 12:
-        won_lost_message("Game Over: Usagi is a crybaby")
-        break
                        
-   
+    pygame.display.update() 
 pygame.quit()
 
 
