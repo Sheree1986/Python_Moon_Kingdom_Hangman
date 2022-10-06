@@ -4,11 +4,19 @@ import random
 from pygame import mixer
 
 # initializes pygame
+mixer.init()
 pygame.init()
 
 # Create screen - this is what display when games runs
 WIDTH, HEIGHT = 800, 500 
 win = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Moon Kingdom Transformation (Hangman!)")
+
+
+# frames per second
+FPS = 60
+clock = pygame.time.Clock()
+
 
 #--------
 # CONSTANTS
@@ -21,9 +29,7 @@ letters = []
 startx = round((WIDTH - (RADIUS * 2 + GAP) * 13) / 2)
 starty = 400
 A = 65
-# Letters front 
-font = pygame.font.SysFont('comicsans', 20)
-TITLE = pygame.font.SysFont('comicsans', 30)
+
 
 # variables for game
 game_paused = False
@@ -32,10 +38,8 @@ game_status = 0
 words = ["USAGI", "SAILOR MOON", "SAILOR MARS", "SAILOR MINI MOON", "SAILOR JUPITER", "SAILOR VENUS", "SAILOR SATURN", "MOON TIARA MAGIC", "SPACE SWORD BLASTER", "CRESCENT BEAM", "MERCURY AQUA RHAPSODY", "WORLD SHAKING", "FIRE SOUL", "SUPREME THUNDER" ]
 word = random.choice(words)
 guesses = [" "]
+start_game = False
 
-# colors variable
-WHITE = (255, 255, 255)
-PINK = (134, 46, 156)
 
 #--------
 # CONSTANTS
@@ -43,19 +47,34 @@ PINK = (134, 46, 156)
 
 
 
-
 # Background music
 mixer.music.load("assets/smtheme.ogg")
+mixer.music.set_volume(0.05)
 mixer.music.play(-1)
-pygame.display.set_caption("Moon Kingdom Transformation (Hangman!)")
+
 
 
 # load images
+# button imgs
+start_img = pygame.image.load("assets/start.png")
+quit_img = pygame.image.load("assets/quit.png")
+restart_img = pygame.image.load("assets/restart.png")
+
+#store transformation images in a list
 images = []
 for i in range(13):
     image = pygame.image.load("assets/hangman" + str(i) + ".png")
     images.append(image)
 
+
+# colors variable
+WHITE = (255, 255, 255)
+PINK = (134, 46, 156)
+
+
+# Letters front 
+font = pygame.font.SysFont('comicsans', 20)
+TITLE = pygame.font.SysFont('comicsans', 30)
 
 
 
@@ -71,10 +90,7 @@ for i in range(26):
 
 
 
-# frames per second
-FPS = 60
-clock = pygame.time.Clock()
-run = True
+
 
 
 
@@ -126,9 +142,7 @@ def won_lost_message(message):
     pygame.time.delay(3000)
         
 
-def restart():
-    win.fill(WHITE)
-    draw()
+ 
     game_status = 0
     for i in range(26):
         x = startx +  GAP * 2 + ((RADIUS * 2 + GAP) * (i % 13))
@@ -137,10 +151,17 @@ def restart():
 
 # Main Loop while loop run is equal to true keep running this
 # loop if game is lost the loop exits 
+run = True
 while run:
 
 # Clock object to ensure game keep track of time
     clock.tick(FPS)
+    if start_game == False:
+        #main menu
+        pass
+    else:
+
+     draw()
 
 # event triggers stored in the for loop
     for event in pygame.event.get():
@@ -162,9 +183,7 @@ while run:
                             game_status += 1
     draw()
 
-    if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_r:
-                restart(r)
+   
 # for loop to see if game is won
     won = True
     for letter in word:
