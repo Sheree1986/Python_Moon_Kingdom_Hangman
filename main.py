@@ -215,9 +215,9 @@ while run:
             won = False
             break
     if won:
-        GIF = pygame.image.load("hangmantransformation.gif")
-        win.blit(GIF, (30, 100))
-        pygame.display.update()
+        # GIF = pygame.image.load("hangmantransformation.gif")
+        # win.blit(GIF, (30, 100))
+        # #pygame.display.update()
         won_lost_message("Moon Prism Power Make UP!")
         break
 # to see if game is loss
