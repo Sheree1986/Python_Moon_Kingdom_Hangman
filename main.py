@@ -1,10 +1,12 @@
 import pygame
+from pygame.locals import *
 import math
 import random
 from pygame import mixer
 import button
 
 # initializes pygame
+pygame.mixer.pre_init()
 mixer.init()
 pygame.init()
 
@@ -36,7 +38,8 @@ A = 65
 # game_paused = False
 # menu_state = "main"
 game_status = 0
-words = ["USAGI", "SAILOR MOON", "SAILOR MARS", "SAILOR MINI MOON", "SAILOR JUPITER", "SAILOR VENUS", "SAILOR SATURN", "MOON TIARA MAGIC", "SPACE SWORD BLASTER", "CRESCENT BEAM", "MERCURY AQUA RHAPSODY", "WORLD SHAKING", "FIRE SOUL", "SUPREME THUNDER" ]
+words = ["USAGI", "SAILOR MOON", "SAILOR MARS", "SAILOR MINI MOON", "SAILOR JUPITER", "SAILOR VENUS", "SAILOR SATURN", "MOON TIARA MAGIC", "SPACE SWORD BLASTER", "CRESCENT BEAM",
+ "MERCURY AQUA RHAPSODY", "WORLD SHAKING", "FIRE SOUL", "SUPREME THUNDER", "TUXEDO MASK", "LUNA", "ARTEMIS", "DIANA", "SAILOR STARLIGHTS", "SERENA", "RINI", "HOLY GRAIL" ]
 word = random.choice(words)
 guesses = [" "]
 start_game = False
@@ -50,10 +53,12 @@ start_game = False
 
 # Background music
 mixer.music.load("assets/smtheme.ogg")
-mixer.music.set_volume(0.05)
+mixer.music.set_volume(0.25)
 mixer.music.play(-1)
 
-
+# load sounds
+sm_fx = pygame.mixer.Sound("assets/jingle.ogg")
+sm_fx.set_volume(0.35)
 
 # load images
 # button imgs
@@ -62,6 +67,8 @@ exit_img = pygame.image.load("assets/exit.png")
 restart_img = pygame.image.load("assets/restart.png")
 start_screen = pygame.image.load("assets/smb.png")
 start_screen = pygame.transform.scale(start_screen, (WIDTH, HEIGHT))
+sm_gf = pygame.image.load("assets/crying.gif")
+sm2_gf = pygame.image.load("assets/sailormoon.jpeg")
 
 #store transformation images in a list
 images = []
@@ -125,34 +132,12 @@ def draw():
 def won_lost_message(message):
     pygame.time.delay(1000)
     win.fill(WHITE)
+    
     text = font.render(message, 1, PINK)
     win.blit(text, (WIDTH/2 - text.get_width()/2,  HEIGHT/2 - text.get_height()/2))
     pygame.display.update()
-    pygame.time.delay(3000)
-            # for loop to see if game is won
-    # won = True
-    # for letter in word:
-    #     if letter not in guesses:
-    #         won = False
-    #         # break
+    #pygame.time.delay(3000)
 
-    #     if won:
-    #         won_lost_message("You Won: Moon Prism Power Make UP!")
-
-    #             #break
-    #     # # to see if game is loss
-
-    #     elif game_status == 12:
-    #             won_lost_message("Game Over: Usagi is a crybaby")
-    #         # break
-
-
-        
-    # game_status = 0
-    # for i in range(26):
-    #     x = startx +  GAP * 2 + ((RADIUS * 2 + GAP) * (i % 13))
-    #     y = starty + ((i // 13) * (GAP + RADIUS * 2))
-    #     letters.append([x, y, chr(A + i), True])
 
 
 
@@ -202,9 +187,11 @@ while run:
 # True value is equal to letter true by changing it to false the button disappear
                         letter[3] = False
                         guesses.append(ltr)
+                        sm_fx.play()
                         if ltr not in word:
                             game_status += 1
   
+# reset
 
    
 
@@ -215,14 +202,20 @@ while run:
             won = False
             break
     if won:
-        # GIF = pygame.image.load("hangmantransformation.gif")
-        # win.blit(GIF, (30, 100))
-        # #pygame.display.update()
-        won_lost_message("Moon Prism Power Make UP!")
-        break
+        
+        won_lost_message("Winner: Moon Prism Power Make UP!")
+        win.blit(sm2_gf,(30,60))
+        pygame.display.update()
+        pygame.time.delay(8000)
+     
+        
+        
 # to see if game is loss
-    if game_status == 12:
-        won_lost_message("Usagi is a crybaby")
+    if game_status == 13:
+        won_lost_message("Game Over: Usagi is a crybaby")
+        win.blit(sm_gf, (300, 60))
+        pygame.display.update()
+        pygame.time.delay(8000)
         break
 
 
