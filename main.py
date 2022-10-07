@@ -5,6 +5,7 @@ import random
 from pygame import mixer
 import button
 
+
 # initializes pygame
 pygame.mixer.pre_init()
 mixer.init()
@@ -52,13 +53,13 @@ start_game = False
 
 
 # Background music
-mixer.music.load("assets/smtheme.ogg")
-mixer.music.set_volume(0.25)
-mixer.music.play(-1)
+# mixer.music.load("assets/smtheme.ogg")
+# mixer.music.set_volume(0.25)
+# mixer.music.play(-1)
 
 # load sounds
-sm_fx = pygame.mixer.Sound("assets/jingle.ogg")
-sm_fx.set_volume(0.35)
+# sm_fx = pygame.mixer.Sound("assets/jingle.ogg")
+# sm_fx.set_volume(0.35)
 
 # load images
 # button imgs
@@ -143,7 +144,7 @@ def won_lost_message(message):
 
 start_button = button.Button(WIDTH // 2 - 400, HEIGHT // 2 - 80, start_img, 1)
 exit_button = button.Button(WIDTH // 2 - -180, HEIGHT // 2 + -80, exit_img, 1)
-restart_button = button.Button(WIDTH // 2 - 100, HEIGHT // 2 - 50, restart_img, 2)
+restart_button = button.Button(WIDTH // 2 - 400, HEIGHT // 2 - 200, restart_img, 2)
 
 
 # Main Loop while loop run is equal to true keep running this
@@ -165,10 +166,24 @@ while run:
                 start_game = True
         if exit_button.draw(win):
                 run = False
-    else:           
+
+
+    else:
         draw()
+  
+    # elif draw():
+    #     run = True
+  
             
-   
+       
+    # else: 
+    #     if restart_button.draw(win):
+    #         start_game = False
+          
+
+
+
+
           
 
 # event triggers stored in the for loop
@@ -187,33 +202,47 @@ while run:
 # True value is equal to letter true by changing it to false the button disappear
                         letter[3] = False
                         guesses.append(ltr)
-                        sm_fx.play()
+                        # sm_fx.play()
                         if ltr not in word:
                             game_status += 1
+                   
   
-# reset
 
-   
+
+
+  
 
 # for loop to see if game is won
     won = True
     for letter in word:
         if letter not in guesses:
             won = False
-            break
+           # break
     if won:
-        
         won_lost_message("Winner: Moon Prism Power Make UP!")
-        win.blit(sm2_gf,(30,60))
+        win.blit(sm2_gf,(30,60))   
+        run = True
+        if restart_button.draw(win):
+   
+            start_game = False
+  
+                
+          
         pygame.display.update()
         pygame.time.delay(8000)
-     
+        break
+        
+        
         
         
 # to see if game is loss
     if game_status == 13:
         won_lost_message("Game Over: Usagi is a crybaby")
         win.blit(sm_gf, (300, 60))
+        run = True
+        if restart_button.draw(win):  
+             start_game = False
+                
         pygame.display.update()
         pygame.time.delay(8000)
         break
@@ -221,6 +250,7 @@ while run:
 
                        
     pygame.display.update() 
+
 pygame.quit()
 
 
