@@ -36,11 +36,11 @@ A = 65
 
 
 # variables for game
-# game_paused = False
-# menu_state = "main"
 game_status = 0
-words = ["USAGI", "SAILOR MOON", "SAILOR MARS", "SAILOR MINI MOON", "SAILOR JUPITER", "SAILOR VENUS", "SAILOR SATURN", "MOON TIARA MAGIC", "SPACE SWORD BLASTER", "CRESCENT BEAM",
- "MERCURY AQUA RHAPSODY", "WORLD SHAKING", "FIRE SOUL", "SUPREME THUNDER", "TUXEDO MASK", "LUNA", "ARTEMIS", "DIANA", "SAILOR STARLIGHTS", "SERENA", "RINI", "HOLY GRAIL" ]
+words = ["USAGI", "SAILOR MOON", "SAILOR MARS", "SAILOR MINI MOON", "SAILOR JUPITER", "SAILOR VENUS",
+ "SAILOR SATURN", "MOON TIARA MAGIC", "SPACE SWORD BLASTER", "CRESCENT BEAM",
+ "MERCURY AQUA RHAPSODY", "WORLD SHAKING", "FIRE SOUL", "SUPREME THUNDER", 
+ "TUXEDO MASK", "LUNA", "ARTEMIS", "DIANA", "SAILOR STARLIGHTS", "SERENA", "RINI", "HOLY GRAIL" ]
 word = random.choice(words)
 guesses = [" "]
 start_game = False
@@ -63,13 +63,13 @@ start_game = False
 
 # load images
 # button imgs
-start_img = pygame.image.load("assets/start.png")
-exit_img = pygame.image.load("assets/exit.png")
-restart_img = pygame.image.load("assets/restart.png")
-start_screen = pygame.image.load("assets/smb.png")
+start_img = pygame.image.load("assets/start.png").convert_alpha()
+exit_img = pygame.image.load("assets/exit.png").convert_alpha()
+restart_img = pygame.image.load("assets/restart.png").convert_alpha()
+start_screen = pygame.image.load("assets/smb.png").convert_alpha()
 start_screen = pygame.transform.scale(start_screen, (WIDTH, HEIGHT))
-sm_gf = pygame.image.load("assets/crying.gif")
-sm2_gf = pygame.image.load("assets/sailormoon.jpeg")
+sm_gf = pygame.image.load("assets/crying.gif").convert_alpha()
+sm2_gf = pygame.image.load("assets/sailormoon.jpeg").convert_alpha()
 
 #store transformation images in a list
 images = []
@@ -144,7 +144,7 @@ def won_lost_message(message):
 
 start_button = button.Button(WIDTH // 2 - 400, HEIGHT // 2 - 80, start_img, 1)
 exit_button = button.Button(WIDTH // 2 - -180, HEIGHT // 2 + -80, exit_img, 1)
-restart_button = button.Button(WIDTH // 2 - 400, HEIGHT // 2 - 200, restart_img, 2)
+restart_button = button.Button(WIDTH // 2 - 400, HEIGHT // 2 - 170, restart_img, 2)
 
 
 # Main Loop while loop run is equal to true keep running this
@@ -166,25 +166,29 @@ while run:
                 start_game = True
         if exit_button.draw(win):
                 run = False
+    #     elif restart_button.draw(win):
+    #             start_game = True
+    #             guesses.clear()
 
 
-    else:
-        draw()
+    # else:
+    #     draw()
   
-    # elif draw():
-    #     run = True
+    elif draw():
+        run = True
   
             
        
-    # else: 
-    #     if restart_button.draw(win):
-    #         start_game = False
-          
-
-
-
-
-          
+    else: 
+                if restart_button.draw(win):
+                    game_status = 0
+                    guesses.clear()
+                    start_game = True
+                    
+                    
+                    
+                    
+                   
 
 # event triggers stored in the for loop
     for event in pygame.event.get():
@@ -205,7 +209,13 @@ while run:
                         # sm_fx.play()
                         if ltr not in word:
                             game_status += 1
-                   
+            # else: 
+            #     if restart_button.draw(win):
+            #                         game_status = 0
+            #                         guesses.clear()
+            #                         start_game = True
+                                
+                    
   
 
 
@@ -219,18 +229,17 @@ while run:
             won = False
            # break
     if won:
-        won_lost_message("Winner: Moon Prism Power Make UP!")
-        win.blit(sm2_gf,(30,60))   
-        run = True
-        if restart_button.draw(win):
-   
-            start_game = False
-  
-                
-          
-        pygame.display.update()
-        pygame.time.delay(8000)
-        break
+       
+
+            won_lost_message("Winner: Moon Prism Power Make UP!")
+            win.blit(sm2_gf,(30,60)) 
+            # if restart_button.draw(win): 
+            #         start_game = True
+            #         guesses.clear() 
+            pygame.display.update()
+            pygame.time.delay(8000)
+           
+            break
         
         
         
@@ -239,10 +248,9 @@ while run:
     if game_status == 13:
         won_lost_message("Game Over: Usagi is a crybaby")
         win.blit(sm_gf, (300, 60))
-        run = True
-        if restart_button.draw(win):  
-             start_game = False
-                
+        # if restart_button.draw(win):
+        #     guesses.clear() 
+        #     start_game = True    
         pygame.display.update()
         pygame.time.delay(8000)
         break
