@@ -22,9 +22,6 @@ FPS = 60
 clock = pygame.time.Clock()
 
 
-#--------
-# CONSTANTS
-#--------
 
 # variables for letter button
 RADIUS = 20
@@ -37,18 +34,7 @@ A = 65
 
 # variables for game
 game_status = 0
-words = ["USAGI", "SAILOR MOON", "SAILOR MARS", "SAILOR MINI MOON", "SAILOR JUPITER", "SAILOR VENUS",
- "SAILOR SATURN", "MOON TIARA MAGIC", "SPACE SWORD BLASTER", "CRESCENT BEAM",
- "MERCURY AQUA RHAPSODY", "WORLD SHAKING", "FIRE SOUL", "SUPREME THUNDER", 
- "TUXEDO MASK", "LUNA", "ARTEMIS", "DIANA", "SAILOR STARLIGHTS", "SERENA", "RINI", "HOLY GRAIL" ]
-word = random.choice(words)
-guesses = [" "]
-start_game = False
 
-
-#--------
-# CONSTANTS
-#--------
 
 
 
@@ -70,8 +56,11 @@ start_screen = pygame.image.load("assets/smb.png").convert_alpha()
 start_screen = pygame.transform.scale(start_screen, (WIDTH, HEIGHT))
 sm_gf = pygame.image.load("assets/crying.gif").convert_alpha()
 sm2_gf = pygame.image.load("assets/sailormoon.jpeg").convert_alpha()
+start_button = button.Button(WIDTH // 2 - 400, HEIGHT // 2 - 80, start_img, 1)
+exit_button = button.Button(WIDTH // 2 - -180, HEIGHT // 2 + -80, exit_img, 1)
+restart_button = button.Button(WIDTH // 2 - 20, HEIGHT // 2 - 255, restart_img, 1)
 
-#store transformation images in a list
+# store transformation images in a list
 images = []
 for i in range(13):
     image = pygame.image.load("assets/hangman" + str(i) + ".png")
@@ -87,13 +76,6 @@ PINK = (134, 46, 156)
 font = pygame.font.SysFont('comicsans', 20)
 TITLE = pygame.font.SysFont('comicsans', 30)
 
-
-# to achieve two rows by using i % 13. i // 13 allows for whole numbers division with no remainders
-game_status = 0
-for i in range(26):
-    x = startx +  GAP * 2 + ((RADIUS * 2 + GAP) * (i % 13))
-    y = starty + ((i // 13) * (GAP + RADIUS * 2))
-    letters.append([x, y, chr(A + i), True])
 
 
 def draw():
@@ -142,11 +124,20 @@ def won_lost_message(message):
 
 
 
-start_button = button.Button(WIDTH // 2 - 400, HEIGHT // 2 - 80, start_img, 1)
-exit_button = button.Button(WIDTH // 2 - -180, HEIGHT // 2 + -80, exit_img, 1)
-restart_button = button.Button(WIDTH // 2 - 400, HEIGHT // 2 - 170, restart_img, 2)
+# to achieve two rows by using i % 13. i // 13 allows for whole numbers division with no remainders
+# game_status = 0
+for i in range(26):
+    x = startx +  GAP * 2 + ((RADIUS * 2 + GAP) * (i % 13))
+    y = starty + ((i // 13) * (GAP + RADIUS * 2))
+    letters.append([x, y, chr(A + i), True])
 
-
+words = ["USAGI", "SAILOR MOON", "SAILOR MARS", "SAILOR MINI MOON", "SAILOR JUPITER", "SAILOR VENUS",
+ "SAILOR SATURN", "MOON TIARA MAGIC", "SPACE SWORD BLASTER", "CRESCENT BEAM",
+ "MERCURY AQUA RHAPSODY", "WORLD SHAKING", "FIRE SOUL", "SUPREME THUNDER", 
+ "TUXEDO MASK", "LUNA", "ARTEMIS", "DIANA", "SAILOR STARLIGHTS", "SERENA", "RINI", "HOLY GRAIL" ]
+word = random.choice(words)
+guesses = [" "]
+start_game = False
 # Main Loop while loop run is equal to true keep running this
 # loop if game is lost the loop exits 
 run = True
@@ -154,7 +145,7 @@ while run:
 
 # Clock object to ensure game keep track of time
     clock.tick(FPS)
-
+ 
     if start_game == False:
         #main menu
         
@@ -176,20 +167,25 @@ while run:
   
     elif draw():
         run = True
-  
+    # else: 
+    #     draw()
+    #     run = True
+
             
        
     else: 
-                if restart_button.draw(win):
-                    game_status = 0
-                    guesses.clear()
-                    start_game = True
+                    if restart_button.draw(win):
+                        game_status = 0
+                        word = random.choice(words)
+                        guesses = [ ]
+                        start_game = True
+                        for letter in letters:
+                            letter[3] =  True
+                        
+                        
                     
                     
-                    
-                    
-                   
-
+                                    
 # event triggers stored in the for loop
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -209,40 +205,23 @@ while run:
                         # sm_fx.play()
                         if ltr not in word:
                             game_status += 1
-            # else: 
-            #     if restart_button.draw(win):
-            #                         game_status = 0
-            #                         guesses.clear()
-            #                         start_game = True
-                                
-                    
-  
-
-
-
-  
+        
 
 # for loop to see if game is won
     won = True
     for letter in word:
         if letter not in guesses:
             won = False
-           # break
+            break
     if won:
        
 
             won_lost_message("Winner: Moon Prism Power Make UP!")
             win.blit(sm2_gf,(30,60)) 
-            # if restart_button.draw(win): 
-            #         start_game = True
-            #         guesses.clear() 
             pygame.display.update()
             pygame.time.delay(8000)
-           
             break
-        
-        
-        
+           
         
 # to see if game is loss
     if game_status == 13:
@@ -254,9 +233,7 @@ while run:
         pygame.display.update()
         pygame.time.delay(8000)
         break
-
-
-                       
+                      
     pygame.display.update() 
 
 pygame.quit()
