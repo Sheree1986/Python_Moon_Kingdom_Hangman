@@ -94,6 +94,7 @@ def draw():
             display_guesses += "_ "
     text = TITLE.render(display_guesses, 1, PINK)
     win.blit(text, (200, 300))
+   
 
 
 # draw buttons with letters A-Z
@@ -178,9 +179,11 @@ while run:
                         game_status = 0
                         word = random.choice(words)
                         guesses = [ ]
+                        guesses += "_ "
                         start_game = True
                         for letter in letters:
                             letter[3] =  True
+                      
                         
                         
                     
