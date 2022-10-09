@@ -30,22 +30,16 @@ letters = []
 startx = round((WIDTH - (RADIUS * 2 + GAP) * 13) / 2)
 starty = 400
 A = 65
-
-
-# variables for game
 game_status = 0
 
-
-
-
 # Background music
-# mixer.music.load("assets/smtheme.ogg")
-# mixer.music.set_volume(0.25)
-# mixer.music.play(-1)
+mixer.music.load("assets/smtheme.ogg")
+mixer.music.set_volume(0.25)
+mixer.music.play(-1)
 
 # load sounds
-# sm_fx = pygame.mixer.Sound("assets/jingle.ogg")
-# sm_fx.set_volume(0.35)
+sm_fx = pygame.mixer.Sound("assets/jingle.ogg")
+sm_fx.set_volume(0.35)
 
 # load images
 # button imgs
@@ -62,21 +56,17 @@ restart_button = button.Button(WIDTH // 2 - 20, HEIGHT // 2 - 255, restart_img, 
 
 # store transformation images in a list
 images = []
-for i in range(13):
+for i in range(11):
     image = pygame.image.load("assets/hangman" + str(i) + ".png")
     images.append(image)
-
 
 # colors variable
 WHITE = (255, 255, 255)
 PINK = (134, 46, 156)
 
-
 # Letters front 
 font = pygame.font.SysFont('comicsans', 20)
 TITLE = pygame.font.SysFont('comicsans', 30)
-
-
 
 def draw():
     win.fill(WHITE)
@@ -96,7 +86,6 @@ def draw():
     win.blit(text, (200, 300))
    
 
-
 # draw buttons with letters A-Z
     for letter in letters:
         x, y, ltr, visible = letter
@@ -104,15 +93,11 @@ def draw():
             pygame.draw.circle(win, PINK, (x, y), RADIUS, 3)
             text = font.render(ltr, 1, PINK)
             win.blit(text, (x - text.get_width()/2, y - text.get_height()/2))
-            #letter_Sound = mixer.Sound("Sailor-Moon-Jingle.ogg")
-            #letter_Sound.play()
-
+        
 # draw image with x and y position we want images display
     win.blit(images[game_status], (270, 80))
     pygame.display.update()
     
-
-
 def won_lost_message(message):
     pygame.time.delay(1000)
     win.fill(WHITE)
@@ -120,9 +105,6 @@ def won_lost_message(message):
     text = font.render(message, 1, PINK)
     win.blit(text, (WIDTH/2 - text.get_width()/2,  HEIGHT/2 - text.get_height()/2))
     pygame.display.update()
-    #pygame.time.delay(3000)
-
-
 
 
 # to achieve two rows by using i % 13. i // 13 allows for whole numbers division with no remainders
@@ -146,34 +128,18 @@ while run:
 
 # Clock object to ensure game keep track of time
     clock.tick(FPS)
+#main menu
  
     if start_game == False:
-        #main menu
-        
-        win.blit(start_screen,(0,0))
-        
-        
-
+        win.blit(start_screen,(0,0)) 
         if start_button.draw(win):
                 start_game = True
         if exit_button.draw(win):
                 run = False
-    #     elif restart_button.draw(win):
-    #             start_game = True
-    #             guesses.clear()
 
-
-    # else:
-    #     draw()
-  
     elif draw():
         run = True
-    # else: 
-    #     draw()
-    #     run = True
 
-            
-       
     else: 
                     if restart_button.draw(win):
                         game_status = 0
@@ -182,12 +148,7 @@ while run:
                         guesses += "_ "
                         start_game = True
                         for letter in letters:
-                            letter[3] =  True
-                      
-                        
-                        
-                    
-                    
+                            letter[3] =  True         
                                     
 # event triggers stored in the for loop
     for event in pygame.event.get():
@@ -205,11 +166,10 @@ while run:
 # True value is equal to letter true by changing it to false the button disappear
                         letter[3] = False
                         guesses.append(ltr)
-                        # sm_fx.play()
+                        sm_fx.play()
                         if ltr not in word:
                             game_status += 1
         
-
 # for loop to see if game is won
     won = True
     for letter in word:
@@ -217,17 +177,14 @@ while run:
             won = False
             break
     if won:
-       
-
             won_lost_message("Winner: Moon Prism Power Make UP!")
             win.blit(sm2_gf,(30,60)) 
             pygame.display.update()
             pygame.time.delay(8000)
             break
-           
-        
+                
 # to see if game is loss
-    if game_status == 13:
+    if game_status == 11:
         won_lost_message("Game Over: Usagi is a crybaby")
         win.blit(sm_gf, (300, 60))
         # if restart_button.draw(win):
