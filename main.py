@@ -30,9 +30,9 @@ A = 65
 game_status = 0
 
 # Background music
-mixer.music.load("assets/smtheme.ogg")
-mixer.music.set_volume(0.25)
-mixer.music.play(-1)
+# mixer.music.load("assets/smtheme.ogg")
+# mixer.music.set_volume(0.25)
+# mixer.music.play(-1)
 
 # load sounds
 sm_fx = pygame.mixer.Sound("assets/jingle.ogg")
@@ -66,7 +66,7 @@ font = pygame.font.SysFont('comicsans', 20)
 TITLE = pygame.font.SysFont('comicsans', 30)
 
 def draw():
-    win.fill(WHITE)
+ 
 
 # Title 
     text = TITLE.render("Moon Kingdom Transformation Hangman", 1, PINK)
@@ -120,7 +120,7 @@ start_game = False
 # loop if game is lost the loop exits 
 run = True
 while run:
-
+    win.fill(WHITE)    
 # Clock object to ensure game keep track of time
     clock.tick(FPS)
 #main menu
@@ -131,10 +131,10 @@ while run:
                 start_game = True
         if exit_button.draw(win):
                 run = False
-
+     
     elif draw():
         run = True
-
+  
     else: 
                     if restart_button.draw(win):
                         game_status = 0
@@ -143,7 +143,8 @@ while run:
                         guesses += "_ "
                         start_game = True
                         for letter in letters:
-                            letter[3] =  True         
+                            letter[3] =  True  
+   
                                     
 # event triggers stored in the for loop
     for event in pygame.event.get():
