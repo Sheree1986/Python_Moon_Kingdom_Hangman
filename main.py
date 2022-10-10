@@ -16,12 +16,9 @@ WIDTH, HEIGHT = 800, 500
 win = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Moon Kingdom Transformation (Hangman!)")
 
-
 # frames per second
 FPS = 60
 clock = pygame.time.Clock()
-
-
 
 # variables for letter button
 RADIUS = 20
@@ -84,7 +81,6 @@ def draw():
             display_guesses += "_ "
     text = TITLE.render(display_guesses, 1, PINK)
     win.blit(text, (200, 300))
-   
 
 # draw buttons with letters A-Z
     for letter in letters:
@@ -105,7 +101,6 @@ def won_lost_message(message):
     text = font.render(message, 1, PINK)
     win.blit(text, (WIDTH/2 - text.get_width()/2,  HEIGHT/2 - text.get_height()/2))
     pygame.display.update()
-
 
 # to achieve two rows by using i % 13. i // 13 allows for whole numbers division with no remainders
 # game_status = 0
@@ -187,9 +182,6 @@ while run:
     if game_status == 11:
         won_lost_message("Game Over: Usagi is a crybaby")
         win.blit(sm_gf, (300, 60))
-        # if restart_button.draw(win):
-        #     guesses.clear() 
-        #     start_game = True    
         pygame.display.update()
         pygame.time.delay(8000)
         break
