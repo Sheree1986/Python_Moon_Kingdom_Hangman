@@ -97,10 +97,10 @@ def draw():
 def won_lost_message(message):
     pygame.time.delay(1000)
     win.fill(WHITE)
-    
     text = font.render(message, 1, PINK)
-    win.blit(text, (WIDTH/2 - text.get_width()/2,  HEIGHT/2 - text.get_height()/2))
+    win.blit(text, (WIDTH/2.5 - text.get_width()/3,  HEIGHT/1.4 - text.get_height()/3))
     # pygame.display.update()
+    
 
 # to achieve two rows by using i % 13. i // 13 allows for whole numbers division with no remainders
 # game_status = 0
@@ -118,6 +118,7 @@ guesses = [" "]
 start_game = False
 # Main Loop while loop run is equal to true keep running this
 # loop if game is lost the loop exits 
+
 run = True
 while run:
     win.fill(WHITE)    
@@ -166,7 +167,7 @@ while run:
                         if ltr not in word:
                             game_status += 1
                             
-        
+   
 # for loop to see if game is won
     won = True
     for letter in word:
@@ -176,7 +177,7 @@ while run:
 
     if won:
             won_lost_message("Winner: Moon Prism Power Make UP!  " + word)
-            win.blit(sm2_gf,(17, 60)) 
+            win.blit(sm2_gf,(300, 10)) 
             pygame.display.update()
             pygame.time.delay(8000)
             break
