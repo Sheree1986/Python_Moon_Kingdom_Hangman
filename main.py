@@ -92,7 +92,7 @@ def draw():
         
 # draw image with x and y position we want images display
     win.blit(images[game_status], (270, 80))
-    pygame.display.update()
+    # pygame.display.update()
     
 def won_lost_message(message):
     pygame.time.delay(1000)
@@ -100,7 +100,7 @@ def won_lost_message(message):
     
     text = font.render(message, 1, PINK)
     win.blit(text, (WIDTH/2 - text.get_width()/2,  HEIGHT/2 - text.get_height()/2))
-    pygame.display.update()
+    # pygame.display.update()
 
 # to achieve two rows by using i % 13. i // 13 allows for whole numbers division with no remainders
 # game_status = 0
@@ -165,6 +165,7 @@ while run:
                         sm_fx.play()
                         if ltr not in word:
                             game_status += 1
+                            
         
 # for loop to see if game is won
     won = True
@@ -172,16 +173,17 @@ while run:
         if letter not in guesses:
             won = False
             break
+
     if won:
-            won_lost_message("Winner: Moon Prism Power Make UP!")
-            win.blit(sm2_gf,(30,60)) 
+            won_lost_message("Winner: Moon Prism Power Make UP!  " + word)
+            win.blit(sm2_gf,(17, 60)) 
             pygame.display.update()
             pygame.time.delay(8000)
             break
                 
 # to see if game is loss
     if game_status == 11:
-        won_lost_message("Game Over: Usagi is a crybaby")
+        won_lost_message("Game Over: Usagi is a crybaby. The correct word is: " + word)
         win.blit(sm_gf, (300, 60))
         pygame.display.update()
         pygame.time.delay(8000)
