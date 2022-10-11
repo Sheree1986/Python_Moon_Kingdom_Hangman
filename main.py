@@ -1,5 +1,4 @@
 import pygame
-from pygame.locals import *
 import math
 import random
 from pygame import mixer
@@ -7,7 +6,7 @@ import button
 
 
 # initializes pygame
-pygame.mixer.pre_init()
+
 mixer.init()
 pygame.init()
 
@@ -30,9 +29,9 @@ A = 65
 game_status = 0
 
 # Background music
-# mixer.music.load("assets/smtheme.ogg")
-# mixer.music.set_volume(0.25)
-# mixer.music.play(-1)
+mixer.music.load("assets/smtheme.ogg")
+mixer.music.set_volume(0.25)
+mixer.music.play(-1)
 
 # load sounds
 sm_fx = pygame.mixer.Sound("assets/jingle.ogg")
