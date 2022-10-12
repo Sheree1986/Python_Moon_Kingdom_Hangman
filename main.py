@@ -102,7 +102,7 @@ def won_lost_message(message):
     
 
 # to achieve two rows by using i % 13. i // 13 allows for whole numbers division with no remainders
-# game_status = 0
+
 for i in range(26):
     x = startx +  GAP * 2 + ((RADIUS * 2 + GAP) * (i % 13))
     y = starty + ((i // 13) * (GAP + RADIUS * 2))
@@ -115,6 +115,8 @@ words = ["USAGI", "SAILOR MOON", "SAILOR MARS", "SAILOR MINI MOON", "SAILOR JUPI
 word = random.choice(words)
 guesses = [" "]
 start_game = False
+
+
 # Main Loop while loop run is equal to true keep running this
 # loop if game is lost the loop exits 
 
@@ -133,7 +135,7 @@ while run:
                 run = False
      
     elif draw():
-        run = True
+        run = False
   
     else: 
                     if restart_button.draw(win):
@@ -147,6 +149,7 @@ while run:
    
                                     
 # event triggers stored in the for loop
+    pygame.display.update()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
@@ -165,6 +168,7 @@ while run:
                         sm_fx.play()
                         if ltr not in word:
                             game_status += 1
+              
                             
    
 # for loop to see if game is won
@@ -182,7 +186,7 @@ while run:
             break
                 
 # to see if game is loss
-    if game_status == 11:
+    if game_status == 10:
         won_lost_message("Game Over: Usagi is a crybaby. The correct word is: " + word)
         win.blit(sm_gf, (300, 60))
         pygame.display.update()
@@ -190,6 +194,7 @@ while run:
         break
                       
     pygame.display.update() 
+
 
 pygame.quit()
 
