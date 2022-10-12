@@ -41,7 +41,7 @@ before Sailor Moon completes her transformation.
 
 #### Struggles
 The restart button functionality was the most difficult code to create. I had to use pseudo code to add my logic. Then finally figure out how to stop the restart button from glitching.
-The glitch was created by a pygame.display.update in the wrong place. Another struggle was getting the app deployed. Because of the risk to cyber security it was decided not to create a .exe file. Replit an online IDE was used to deploy the game.
+The glitch was created by a pygame.display.update in the wrong place. Another struggle was getting the app deployed. Because of the risk to cyber security it was decided not to create a .exe file. [Replit](https://replit.com/@Sheree1986/MoonKingdom#main.py) an online IDE was used to deploy the game.
 
 
 
