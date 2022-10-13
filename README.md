@@ -6,6 +6,25 @@ This python application take a spin on the classic game of hangman. Sailor Moon 
 Instead of the tradition "hanging", it is replaced with a transformation. In order to win a user has 10 attempts to guess the correct word 
 before Sailor Moon completes her transformation.
 
+
+#### Shoot for the Stars
+Sailor Moon theme hangman game.  Where as the player guesses wrong Sailor Moon completes her Moon Prism Power Make UP transformation. When the transformation is completed the player losses. The original opening theme song is the background music. Other sounds play when guess is correct or incorrect. The win screen and the lost screen will have different gifs and messages. There will be two player functionality and buttons to quit, start, replay. The ability to keep score if there are two players.
+
+#### MVP v1
+- [X] Basic hangman game that allows user to guess multiple worded answers
+- [X] Pictures to show Sailor Moon transformation as player guess wrong letter
+- [X] Letter disappear of screen once clicked
+- [X] If guess is correct the letter appears on the word guess screen area
+- [X] When all letter are correct user is showed message
+- [X] If lost another message is shown
+
+
+### MVP v2
+- [X] Sound for both background and when letter clicked
+- [X] Start, exit and restart buttons
+
+
+
 #### Machineries Used
 
 1. Python - [python-3.10.5](https://www.python.org/downloads/)
