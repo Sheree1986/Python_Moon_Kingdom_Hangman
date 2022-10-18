@@ -149,7 +149,7 @@ while run:
    
                                     
 # event triggers stored in the for loop
-    pygame.display.update()
+ 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
@@ -168,9 +168,10 @@ while run:
                         sm_fx.play()
                         if ltr not in word:
                             game_status += 1
+                            
               
                             
-   
+    
 # for loop to see if game is won
     won = True
     for letter in word:
@@ -186,7 +187,7 @@ while run:
             break
                 
 # to see if game is loss
-    if game_status == 10:
+    if game_status == 11:
         won_lost_message("Game Over: Usagi is a crybaby. The correct word is: " + word)
         win.blit(sm_gf, (300, 60))
         pygame.display.update()
